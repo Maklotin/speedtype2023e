@@ -1,0 +1,9 @@
+sudo systemctl start mongod
+//starter mongodb database
+
+sudo systemctl restart mongod
+
+sudo systemctl status mongod
+
+klient:
+ssh admin1@172.25.137.199

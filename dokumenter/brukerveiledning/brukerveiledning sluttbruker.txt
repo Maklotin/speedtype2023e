@@ -1,0 +1,4 @@
+1. Registrer en bruker ved å trykke på "registrer bruker". 
+2. Om brukerregistrering var vellykket så kan du logge inn på brukeren.
+3. Etter du har logget inn så kommer du til en side med en knapp hvor det står "start".
+4. Etter du trykker "start" vil det komme opp et tilfeldig avsnitt, og en tekstboks under hvor du skal skrive avsnittet ord for ord på 20 sekunder. Etter 20 sekunder har gått vil du få en score på hvor mange ord du klarte å skrive og hvor "accurate" skrivinga di var til avsnittet.

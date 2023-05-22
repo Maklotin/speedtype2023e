@@ -1,0 +1,2 @@
+BSYNjSs7vQBJU3aJ
+mongodb+srv://admin:BSYNjSs7vQBJU3aJ@aarsoppgave.e8xq6g5.mongodb.net/test

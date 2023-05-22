@@ -1,0 +1,19 @@
+mandag:
+Jeg søkte på hvordan koble til mongodb database fra MongoDB Alias til visual studio koden. Jeg prøvde men ingenting funket, jeg importerte MongoDB funksjoner som MongoClient inn til React koden og fikk 30 errorer og 19 warnings og alle var "polyfill problemer". For å fikse disse måtte jeg grave inn i node_modules mappen som inneholder over 100 funksjoner og for hver gang jeg fiksa et problem fikk jeg 5 nye. 
+
+tirsdag:
+Jeg fortsatte å feilsøke problemene og fant ikke fram til noe, jeg fant ingen med de eksakt samme problemene og dermed kom ingen vei. Jeg brukte også mye tid på å søke praksisplass så jeg fikk ikke jobba så mye med årsoppgaven.
+
+onsdag:
+Jeg bare lot errorene være og begynte å sette opp en Ubuntu Live Server på Hyper-V og skulle sette opp MongoDB der. VMene kræsja mange ganger og jeg måtte ofte lage de på nytt igjen. Tilslutt fikk jeg installert MongoDB og begynte å konfigurere MongoDB.
+
+torsdag:
+Jeg jobbet å koble sammen MongoDB til laptopen men får problemer med SSH. Jeg fant ut at jeg prøvde å koble til SSH med feil IP adresse. Jeg fikk til å koble til SSH før lunsj. Etter lunsj fikk jeg aktivert MongoDB serveren.
+
+fredag:
+Jeg fikk koblet MongoDB serveren til Visual Studio Code og MongoDB Compass så nå har jeg full tilgang til databasen via klienten. Nå har jeg begynt å implementere kode i innlogging og brukerregistreringssiden som lagrer brukernavn og passord i en database.
+
+24. April
+Har fjernet koblingne mellom årsoppgavemappen lokalt på PCen og Guthub repository.
+
+Hver gang jeg startet prosjektet på nettleseren så ville den koble seg på "Localhost:3000/Maklotin/aarsoppgave202". Dette skjedde fordi det var kode i Package.json som koblet seg på "aarsopggave2023" Repository. Jeg reinstallerte ReactJs og overførte filer og dermed kræsjet kobling til Github og den lokale mappen. Jeg fjerna linjen som koblet til github repository og så funket alt som det skulle.
