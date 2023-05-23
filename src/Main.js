@@ -1,58 +1,21 @@
-import React, { useEffect, useState } from "react";
-import './App.css';
-import logo from './bilder/logo1-1.png'
-import { db } from './backend/firebase-config'
-import { collection, getDocs, addDoc } from 'firebase/firestore'
-import lagBruker from "./lagBruker.js";
+import React, { useState, useEffect } from "react";
+import './frontend/App.css';
+
+import RegEllerLagBruker from "./frontend/RegEllerLagBruker";
+import SpeedTypeSpill from "./frontend/SpeedTypeSpill";
+import Adminside from "./frontend/Adminside";
 
 
-function Main() {
+const Main = () => {
     const [aktivSideMain, setAktivSideMain] = useState("SpeedType")
-    const [bruker, setBruker] = useState([])
-    
-    const usersCollectionRef = collection(db, "brukere")
-
-
     const [brukerLoggetInn, setBrukerLoggetInn] = useState(false)
 
-    var avnsitt = "ingen tekst funnet"
-
-
-    const LoggetInn = () => {
-        return (
-            <>
-                <div id="f_spillet">
-                    <img src={logo} alt="SpeedType logo" id="logo_speedtype"></img>
-                    <hr id="kort_strek"></hr>
-                    <div id="start_spill">
-                        <button class="knapper"><h3>Start</h3></button>
-                    </div>
-                    <p>{avnsitt}</p>
-                    <input className="ST_input" placeholder="skriv inn teksten her"></input>
-                </div>
-                <div id="highscores">
-                    {bruker.map((bruker) => { return <div>
-                         {" "}
-                         <p>brukernavn: {bruker.brukernavn}</p>
-                         </div> })}
-                </div>
-            </>
-        )
-    }
-
-    const IkkeLoggetInn = () => {
-        return (
-            <>
-            <lagBruker />
-            </>
-        )
-    }
 
     const SpeedType = () => {
         if (brukerLoggetInn === true) {
-            return <LoggetInn />
+            return <SpeedTypeSpill />
         } else {
-            return <IkkeLoggetInn />
+            return <RegEllerLagBruker />
         }
     }
 
@@ -78,7 +41,7 @@ function Main() {
     const LoverOgRegler = () => {
         return (
             <>
-
+                <Adminside />
             </>
         )
 
@@ -100,6 +63,7 @@ function Main() {
     return (
         <>
             {/* Navigasjonsbar */}
+            
             
             <div id="top">
 
