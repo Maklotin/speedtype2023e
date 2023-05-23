@@ -73,11 +73,11 @@ const RegEllerLagBruker = () => {
         /*https://www.youtube.com/watch?v=jCY6DH8F4oc&t=853s*/
 
         const getBrukere = async () => {
-            const data = await getDocs(usersCollectionRef)
-            setBruker(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+            const data = await getDocs(usersCollectionRef);
+            setBruker(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         }
 
-        getBrukere()
+        getBrukere();
     }, []);
 
     //logg inn funksjoner -----------------------------------------------------------------
