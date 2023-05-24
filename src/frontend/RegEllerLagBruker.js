@@ -1,7 +1,10 @@
-import React, { cloneElement, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './App.css';
 import { db } from '../backend/firebase-config'
 import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
+
+import Main from "../Main";
+
 
 const RegEllerLagBruker = () => {
     //registrer bruker
@@ -64,6 +67,11 @@ const RegEllerLagBruker = () => {
         setNyPassord(passordFelt2);
     };
 
+    const AnnenFil = () => {
+        const { brukerLoggetInn } = useContext(Main);
+        console.log(brukerLoggetInn)
+    }
+
     if (poeng < highscore) {
         setHighscore(poeng)
     } else {
@@ -97,7 +105,7 @@ const RegEllerLagBruker = () => {
         const brukere = querySnapshot.docs.map((doc) => doc.data());
         return brukere;
     }
-    
+
     useEffect(() => {
         const getBrukere = async () => {
             const brukereMottatt = await hentBrukere();
@@ -141,6 +149,6 @@ const RegEllerLagBruker = () => {
             </div>
         </>
     )
-} 
+}
 
 export default RegEllerLagBruker;
