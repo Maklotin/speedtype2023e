@@ -1,8 +1,15 @@
 import React from "react";
 import './App.css'
 
-const FAQ = () => {
-
+const FaqSide = () => {
+    
+    return (
+        <>
+            <div id="FAQside">
+                <h1>Frequently Asked Question</h1>
+            </div>
+        </>
+    )
 }
 
-export default FAQ;
+export default FaqSide;

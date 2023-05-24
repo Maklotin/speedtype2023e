@@ -5,7 +5,7 @@ import './frontend/App.css';
 import RegEllerLagBruker from "./frontend/RegEllerLagBruker";
 import SpeedTypeSpill from "./frontend/SpeedTypeSpill";
 import Adminside from "./frontend/Adminside";
-import FAQ from "./frontend/FAQ";
+import FaqSide from "./frontend/FAQ";
 
 
 const Main = () => {
@@ -34,7 +34,7 @@ const Main = () => {
     const FAQ = () => {
         return (
             <>
-
+                <FaqSide />
             </>
         )
 
