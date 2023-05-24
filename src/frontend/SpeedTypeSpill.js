@@ -20,7 +20,7 @@ const SpeedTypeSpill = () => {
     var avnsitt = "ingen tekst funnet"
 
     const [bruker, setBruker] = useState([])
-    
+
     const usersCollectionRef = collection(db, "brukere")
     return (
         <>
@@ -34,10 +34,22 @@ const SpeedTypeSpill = () => {
                 <input className="ST_input" placeholder="skriv inn teksten her"></input>
             </div>
             <div id="highscores">
-                {bruker.map((bruker) => { return <div>
-                     {" "}
-                     <p>brukernavn: {bruker.brukernavn}</p>
-                     </div> })}
+                <table>
+                    <tr>
+                        <th><h1>Brukernavn</h1></th>
+                        <th><h1>Highscore</h1></th>
+                    </tr>
+                    {bruker.map((bruker) => {
+                        return <div>
+                            {" "}
+                            <tr>
+                                <td><p>{bruker.brukernavn}</p></td>
+                                <td><p>{bruker.highscore}</p></td>
+                            </tr>
+                        </div>
+                    })}
+                </table>
+
             </div>
         </>
     )

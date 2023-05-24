@@ -124,7 +124,7 @@ h1 {
   text-shadow: 2px 2px black;
 }
 
-.undertekst {
+.undertekst, #adminside p, #FAQside p, #highscores p {
   font-family: 'Courier New', Courier, monospace;
   color: white;
   font-weight: bold;
@@ -204,6 +204,29 @@ h1 {
   color: black
 }
 
+#highscores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4vh;
+}
+
+#highscores table tr{
+  border-bottom: 2px solid yellow;
+  border-right: 2px solid yellow;
+  box-shadow: 0.5vh 0.5vh black;
+  width: 60vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#highscores p, #highscores h1 {
+  font-size: 3vh;
+  margin: 3vh;
+}
+
+
 /*SPEEDTYPE LOGG INN OG REGISTRER BRUKER ---------------------------------------------------------*/
 #ikkeloggetinn {
   display: flex;
@@ -280,3 +303,11 @@ h1 {
   font-weight: bold;
   color: black;
 }
+
+/*FREQUENTLY ASKED QUESTIONS ----------------------------------------------------------*/
+#FAQside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

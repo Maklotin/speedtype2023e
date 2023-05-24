@@ -1,66 +1,61 @@
 import React, { createContext, useState, useEffect } from "react";
-
-
 import './frontend/App.css';
-
-
-//De forskjellig sidene
 import RegEllerLagBruker from "./frontend/RegEllerLagBruker";
 import SpeedTypeSpill from "./frontend/SpeedTypeSpill";
-import Adminside from "./frontend/Adminside";
+import AdminSide from "./frontend/Adminside";
 import FaqSide from "./frontend/FAQ";
+import LoverOgReglerSide from "./frontend/LoverOgRegler"
 
-import { RegEllerLagBrukerContext }
-//denne lar meg eksportere states
 export const MainContext = createContext();
- 
+
 const Main = () => {
-    const [aktivSideMain, setAktivSideMain] = useState("SpeedType")
-    const [brukerLoggetInn, setBrukerLoggetInn] = useState(false)
+    const [aktivSideMain, setAktivSideMain] = useState("SpeedType");
+    const [brukerLoggetInn, setBrukerLoggetInn] = useState(false);
+    const [loggTekstBoolean, setLoggTekstBoolean] = useState(false);
     const [loggTekst, setLoggTekst] = useState("none")
+    const [adminKnapp, setAdminKnapp] = useState("none")
+    const [adminKnappBoolean, setAdminKnappBoolean] = useState(false)
 
+    useEffect(() => {
+        if (loggTekstBoolean) {
+            setLoggTekst("inline");
+        } else {
+            setLoggTekst("none");
+        }
+    }, [loggTekstBoolean]);
 
+    useEffect(() => {
+        if (adminKnappBoolean) {
+            setAdminKnapp("inline");
+        } else {
+            setAdminKnapp("none");
+        }
+    }, [adminKnappBoolean]);
 
     const loggUt = () => {
-        setBrukerLoggetInn(false)
-        setAktivSideMain("SpeedType")
-        setLoggTekst("none")
-    }
+        setBrukerLoggetInn(false);
+        setAktivSideMain("SpeedType");
+        setLoggTekstBoolean(false);
+    };
 
     const SpeedType = () => {
-        if (brukerLoggetInn === true) {
-            return <SpeedTypeSpill />
-        } else {
-            return <RegEllerLagBruker />
-        }
-    }
-
+        return brukerLoggetInn ? <SpeedTypeSpill /> : <RegEllerLagBruker />;
+    };
 
     const IntrVideo = () => {
-        return (
-            <>
-
-            </>
-        )
-
-    }
+        return <></>;
+    };
 
     const FAQ = () => {
-        return (
-            <>
-                <FaqSide />
-            </>
-        )
-
-    }
+        return <FaqSide />;
+    };
 
     const LoverOgRegler = () => {
-        return (
-            <>
-                <Adminside />
-            </>
-        )
+        return <LoverOgReglerSide />;
+    };
 
+    const Admin = () => {
+        return <AdminSide />
     }
 
     const AktivSideMainFunc = () => {
@@ -71,32 +66,43 @@ const Main = () => {
                 return <FAQ />;
             case "LoverOgRegler":
                 return <LoverOgRegler />;
+            case "AdminSide":
+                return <Admin />
             default:
                 return <SpeedType />;
         }
-    }
+    };
 
     return (
         <>
-            <MainContext.Provider value={{ brukerLoggetInn, setBrukerLoggetInn }}>
-            {/* Navigasjonsbar */}
-
-
-            <div id="top">
-
-                <button onClick={() => setAktivSideMain("SpeedType")} className="knapper"><p>Spill</p></button>
-                <button onClick={() => setAktivSideMain("IntrVideo")} className="knapper"><p>Instruksjonsvideo</p></button>
-                <button onClick={() => setAktivSideMain("FAQ")} className="knapper"><p>FAQ</p></button>
-                <button onClick={() => setAktivSideMain("LoverOgRegler")} className="knapper"><p>Lover og regler</p></button>
-                <button onClick={() => loggUt()} style={{ display: loggTekst }} className="knapper"><p>Logg ut</p></button>
-            </div>
-            <hr className="strek"></hr>
-
-            <AktivSideMainFunc />
+            <MainContext.Provider
+                value={{ brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean }}
+            >
+                <div id="top">
+                    <button onClick={() => setAktivSideMain("SpeedType")} className="knapper">
+                        <p>Spill</p>
+                    </button>
+                    <button onClick={() => setAktivSideMain("IntrVideo")} className="knapper">
+                        <p>Instruksjonsvideo</p>
+                    </button>
+                    <button onClick={() => setAktivSideMain("FAQ")} className="knapper">
+                        <p>FAQ</p>
+                    </button>
+                    <button onClick={() => setAktivSideMain("LoverOgRegler")} className="knapper">
+                        <p>Lover og regler</p>
+                    </button>
+                    <button onClick={() => setAktivSideMain("AdminSide")} style={{ display: adminKnapp, backgroundColor: "blue" }} className="knapper">
+                        <p>Admin side</p>
+                        </button>
+                    <button onClick={() => loggUt()} style={{ display: loggTekst, backgroundColor: "red" }} className="knapper">
+                        <p>Logg ut</p>
+                    </button>
+                </div>
+                <hr className="strek"></hr>
+                <AktivSideMainFunc />
             </MainContext.Provider>
         </>
-    )
-}
-
+    );
+};
 
 export default Main;

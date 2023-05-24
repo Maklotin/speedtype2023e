@@ -5,7 +5,6 @@ import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
 
 import { MainContext } from "../Main";
 
-export const RegEllerLagBrukerContext = createContext();
 
 const RegEllerLagBruker = () => {
 
@@ -88,8 +87,8 @@ const RegEllerLagBruker = () => {
     }, []);
 
     //logg inn funksjoner -----------------------------------------------------------------
-    const { brukerLoggetInn, setBrukerLoggetInn } = useContext(MainContext);
-    console.log(brukerLoggetInn)
+    const { brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean } = useContext(MainContext);
+
 
     const handleBrukernavnInput = (e) => {
         setBrukernavnIn(e.target.value);
@@ -117,24 +116,33 @@ const RegEllerLagBruker = () => {
 
     const handleStateOppdater = () => {
         setBrukerLoggetInn(prevState => !prevState);
+        setLoggTekstBoolean(prevState => !prevState);
     }
 
 
     const handleLogin = () => {
         const bruker = regBrukere.find(
-            (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
+          (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
         );
-
-        if (bruker) {
+    
+        if (brukernavnIn === "admin132" && passordIn === "ad132min") {
+          setAdminKnappBoolean((prevState) => !prevState);
+          console.log("ADMIN BRUKER LOGGET INN ");
+          setError("ADMIN bruker logget inn!");
+          setErrorFarge("blue")
+        } else {
+          if (bruker) {
+            setAdminKnappBoolean(false);
             console.log("BRUKER LOGGET INN ");
             setError("");
             handleStateOppdater();
-        } else {
+          } else {
             console.log("bruker ikke logget inn");
             setErrorLog("Brukernavn eller passord er feil");
             setErrorFarge("red");
+          }
         }
-    };
+      };
 
 
 

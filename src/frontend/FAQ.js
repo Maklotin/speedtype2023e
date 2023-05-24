@@ -7,6 +7,7 @@ const FaqSide = () => {
         <>
             <div id="FAQside">
                 <h1>Frequently Asked Question</h1>
+                
             </div>
         </>
     )
