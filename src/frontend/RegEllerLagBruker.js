@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import './App.css';
 import { db } from '../backend/firebase-config'
 import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
 
-import Main from "../Main";
+import { MainContext } from "../Main";
 
+export const RegEllerLagBrukerContext = createContext();
 
 const RegEllerLagBruker = () => {
+
     //registrer bruker
     const [passordFelt1, setPassordFelt1] = useState("")
     const [passordFelt2, setPassordFelt2] = useState("")
@@ -67,10 +69,6 @@ const RegEllerLagBruker = () => {
         setNyPassord(passordFelt2);
     };
 
-    const AnnenFil = () => {
-        const { brukerLoggetInn } = useContext(Main);
-        console.log(brukerLoggetInn)
-    }
 
     if (poeng < highscore) {
         setHighscore(poeng)
@@ -90,6 +88,9 @@ const RegEllerLagBruker = () => {
     }, []);
 
     //logg inn funksjoner -----------------------------------------------------------------
+    const { brukerLoggetInn, setBrukerLoggetInn } = useContext(MainContext);
+    console.log(brukerLoggetInn)
+
     const handleBrukernavnInput = (e) => {
         setBrukernavnIn(e.target.value);
     }
@@ -114,18 +115,27 @@ const RegEllerLagBruker = () => {
         getBrukere();
     }, [])
 
+    const handleStateOppdater = () => {
+        setBrukerLoggetInn(prevState => !prevState);
+    }
+
+
     const handleLogin = () => {
-        const bruker = regBrukere.find((bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn);
+        const bruker = regBrukere.find(
+            (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
+        );
 
         if (bruker) {
-            console.log("BRUKER LOGGET INN ")
-            setError("")
+            console.log("BRUKER LOGGET INN ");
+            setError("");
+            handleStateOppdater();
         } else {
-            console.log("bruker ikke logget inn")
-            setErrorLog("Brukernavn eller passord er feil")
-            setErrorFarge("red")
+            console.log("bruker ikke logget inn");
+            setErrorLog("Brukernavn eller passord er feil");
+            setErrorFarge("red");
         }
-    }
+    };
+
 
 
     return (

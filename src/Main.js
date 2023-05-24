@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import './frontend/App.css';
+import React, { createContext, useState, useEffect } from "react";
 
+
+import './frontend/App.css';
 
 
 //De forskjellig sidene
@@ -9,18 +10,21 @@ import SpeedTypeSpill from "./frontend/SpeedTypeSpill";
 import Adminside from "./frontend/Adminside";
 import FaqSide from "./frontend/FAQ";
 
-
+import { RegEllerLagBrukerContext }
+//denne lar meg eksportere states
+export const MainContext = createContext();
+ 
 const Main = () => {
     const [aktivSideMain, setAktivSideMain] = useState("SpeedType")
     const [brukerLoggetInn, setBrukerLoggetInn] = useState(false)
-    const [loggTekst, setLoggTeskt] = useState("none")
+    const [loggTekst, setLoggTekst] = useState("none")
 
 
 
     const loggUt = () => {
         setBrukerLoggetInn(false)
         setAktivSideMain("SpeedType")
-        setLoggTeskt("none")
+        setLoggTekst("none")
     }
 
     const SpeedType = () => {
@@ -74,6 +78,7 @@ const Main = () => {
 
     return (
         <>
+            <MainContext.Provider value={{ brukerLoggetInn, setBrukerLoggetInn }}>
             {/* Navigasjonsbar */}
 
 
@@ -88,6 +93,7 @@ const Main = () => {
             <hr className="strek"></hr>
 
             <AktivSideMainFunc />
+            </MainContext.Provider>
         </>
     )
 }
