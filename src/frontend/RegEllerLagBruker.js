@@ -19,6 +19,7 @@ const RegEllerLagBruker = () => {
     const [highscore, setHighscore] = useState(0)
     const [poeng, setPoeng] = useState(0);
     const [error, setError] = useState("")
+    const [errorLog, setErrorLog] = useState("")
     const [errorFarge, setErrorFarge] = useState("")
     const usersCollectionRef = collection(db, "brukere")
     const [bruker, setBruker] = useState([])
@@ -110,8 +111,11 @@ const RegEllerLagBruker = () => {
 
         if (bruker) {
             console.log("BRUKER LOGGET INN ")
+            setError("")
         } else {
             console.log("bruker ikke logget inn")
+            setErrorLog("Brukernavn eller passord er feil")
+            setErrorFarge("red")
         }
     }
 
@@ -123,6 +127,7 @@ const RegEllerLagBruker = () => {
                     <h1>Logg Inn</h1>
                     <input onChange={handleBrukernavnInput} value={brukernavnIn} className="ST_input" type="text" placeholder="brukernavn..."></input>
                     <input onChange={handlePassordInput} value={passordIn} className="ST_input" type="password" placeholder="passord..."></input>
+                    <p id="error" style={{ color: errorFarge }}>{errorLog}</p>
                     <button onClick={handleLogin} className="knapper"><p>Logg Inn</p></button>
                 </div>
                 <div id="lagnybruker">

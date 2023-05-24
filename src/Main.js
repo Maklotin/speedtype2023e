@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import './frontend/App.css';
 
+//De forskjellig sidene
 import RegEllerLagBruker from "./frontend/RegEllerLagBruker";
 import SpeedTypeSpill from "./frontend/SpeedTypeSpill";
 import Adminside from "./frontend/Adminside";
+import FAQ from "./frontend/FAQ";
 
 
 const Main = () => {

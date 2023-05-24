@@ -55,7 +55,7 @@ const Adminside = () => {
         <>
             <div id="adminside">
                 <h1>Her er en oversikt over alle brukerne registrert i databasen</h1>
-                <table id="highscores">
+                <tbody id="highscores">
                     {bruker.map((bruker) => {
                         return <tr>
                             <td>
@@ -71,7 +71,7 @@ const Adminside = () => {
                             </td>
                         </tr>
                     })}
-                </table>
+                </tbody>
             </div>
 
         </>
