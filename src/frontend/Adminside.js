@@ -56,7 +56,7 @@ const Adminside = () => {
             <div id="adminside">
                 <h1>Her er en oversikt over alle brukerne registrert i databasen</h1>
                 <p>For å logge ut av Admin bruker så bare logger du på en annen bruker på "Spill" siden.</p>
-                <tbody id="highscores">
+                <tbody id="listeoverbrukere">
                     {bruker.map((bruker) => {
                         return <tr>
                             <td>
