@@ -30,16 +30,23 @@ const RegEllerLagBruker = () => {
 
     //registrer bruker funksjoner------------------------------------------------------------
     const lagBruker = async () => {
-        if (nyBrukernavn !== "" && nyPassord !== "") {
+        const bruker = regBrukere.find(
+            (bruker) => bruker.brukernavn === brukernavnIn
+        );
+        if (nyBrukernavn !== "" && nyPassord !== "" && bruker === false) {
             await addDoc(usersCollectionRef, {
                 brukernavn: nyBrukernavn,
-                passord: nyPassord
+                passord: nyPassord,
+                highscore: highscore
             });
             setError("Bruker registrert");
             setErrorFarge("green");
             setNyBrukernavn("");
             setPassordFelt1("");
             setPassordFelt2("");
+        } else if (nyBrukernavn !== "" && nyPassord !== "" && bruker === true){
+            setError("Brukernavn er tatt av noen andre");
+            setErrorFarge("red");
         } else {
             setError("Passordet matcher ikke!");
             setErrorFarge("red");
@@ -122,49 +129,54 @@ const RegEllerLagBruker = () => {
 
     const handleLogin = () => {
         const bruker = regBrukere.find(
-          (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
+            (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
         );
-    
+
         if (brukernavnIn === "admin132" && passordIn === "ad132min") {
-          setAdminKnappBoolean((prevState) => !prevState);
-          console.log("ADMIN BRUKER LOGGET INN ");
-          setError("ADMIN bruker logget inn!");
-          setErrorFarge("blue")
+            setAdminKnappBoolean((prevState) => !prevState);
+            console.log("ADMIN BRUKER LOGGET INN ");
+            setError("ADMIN bruker logget inn!");
+            setErrorFarge("blue")
         } else {
-          if (bruker) {
-            setAdminKnappBoolean(false);
-            console.log("BRUKER LOGGET INN ");
-            setError("");
-            handleStateOppdater();
-          } else {
-            console.log("bruker ikke logget inn");
-            setErrorLog("Brukernavn eller passord er feil");
-            setErrorFarge("red");
-          }
+            if (bruker) {
+                setAdminKnappBoolean(false);
+                console.log("BRUKER LOGGET INN ");
+                setError("");
+                handleStateOppdater();
+            } else {
+                console.log("bruker ikke logget inn");
+                setErrorLog("Brukernavn eller passord er feil");
+                setErrorFarge("red");
+            }
         }
-      };
+    };
 
 
 
     return (
         <>
-            <div id="ikkeloggetinn">
-                <div id="logginn">
-                    <h1>Logg Inn</h1>
-                    <input onChange={handleBrukernavnInput} value={brukernavnIn} className="ST_input" type="text" placeholder="brukernavn..."></input>
-                    <input onChange={handlePassordInput} value={passordIn} className="ST_input" type="password" placeholder="passord..."></input>
-                    <p id="error" style={{ color: errorFarge }}>{errorLog}</p>
-                    <button onClick={handleLogin} className="knapper"><p>Logg Inn</p></button>
-                </div>
-                <div id="lagnybruker">
-                    <h1>Registrer Bruker</h1>
-                    <input value={nyBrukernavn} onChange={handleNyBrukernavnChange} className="ST_input" type="text" placeholder="brukernavn"></input>
-                    <input value={passordFelt1} onChange={handlePassordFelt1Change} className="ST_input" type="password" placeholder="passord"></input>
-                    <input value={passordFelt2} onChange={handlePassordFelt2Change} className="ST_input" type="password" placeholder="bekreft passord"></input>
-                    <p id="error" style={{ color: errorFarge }}>{error}</p>
-                    <button type="button" onClick={lagBruker} className="knapper"><p>Registrer Bruker</p></button>
+            <div id="ikkeloggetinnside">
+                <p id="advarsel">Vennligst ikke oppgi personlig opplysninger og bruk helst et unikt passord, sjekk FAQ for mer informasjon</p>
+                <div id="ikkeloggetinn">
+
+                    <div id="logginn">
+                        <h1>Logg Inn</h1>
+                        <input onChange={handleBrukernavnInput} value={brukernavnIn} className="ST_input" type="text" placeholder="brukernavn..."></input>
+                        <input onChange={handlePassordInput} value={passordIn} className="ST_input" type="password" placeholder="passord..."></input>
+                        <p id="error" style={{ color: errorFarge }}>{errorLog}</p>
+                        <button onClick={handleLogin} className="knapper"><p>Logg Inn</p></button>
+                    </div>
+                    <div id="lagnybruker">
+                        <h1>Registrer Bruker</h1>
+                        <input value={nyBrukernavn} onChange={handleNyBrukernavnChange} className="ST_input" type="text" placeholder="brukernavn"></input>
+                        <input value={passordFelt1} onChange={handlePassordFelt1Change} className="ST_input" type="password" placeholder="passord"></input>
+                        <input value={passordFelt2} onChange={handlePassordFelt2Change} className="ST_input" type="password" placeholder="bekreft passord"></input>
+                        <p id="error" style={{ color: errorFarge }}>{error}</p>
+                        <button type="button" onClick={lagBruker} className="knapper"><p>Registrer Bruker</p></button>
+                    </div>
                 </div>
             </div>
+
         </>
     )
 }
