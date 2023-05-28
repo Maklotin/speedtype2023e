@@ -11,6 +11,7 @@ export const MainContext = createContext();
 const Main = () => {
     const [aktivSideMain, setAktivSideMain] = useState("SpeedType");
     const [brukerLoggetInn, setBrukerLoggetInn] = useState(false);
+    const [brukeren, setBrukeren] = useState("")
     const [loggTekstBoolean, setLoggTekstBoolean] = useState(false);
     const [loggTekst, setLoggTekst] = useState("none")
     const [adminKnapp, setAdminKnapp] = useState("none")
@@ -76,7 +77,7 @@ const Main = () => {
     return (
         <>
             <MainContext.Provider
-                value={{ brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean }}
+                value={{ brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean, brukeren, setBrukeren }}
             >
                 <div id="top">
                     <button onClick={() => setAktivSideMain("SpeedType")} className="knapper">

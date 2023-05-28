@@ -238,17 +238,82 @@ h1 {
   border-bottom: 2px solid yellow;
   border-right: 2px solid yellow;
   box-shadow: 0.5vh 0.5vh black;
-  width: 60vh;
+  width: 90vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
+#highscores table tbody tr td {
+  width: 30vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 
 #highscores p, #highscores h1 {
   font-size: 3vh;
   margin: 3vh;
 }
 
+.p_venstre {
+  text-align: left;
+  width: 25vh;
+}
+
+.p_hoerye {
+  text-align: right;
+  width: 25vh;
+}
+
+.tekst_ord {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3vh;
+  font-weight: 900;
+  color: wheat;
+  line-height: 3vh;
+  margin: 1vh;
+  text-shadow: 0.3vh 0.3vh black;
+}
+
+.innhold {
+  width: 150vh;
+}
+
+.ST_input2 {
+  background-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3vh;
+  font-weight: bold;
+  border: 0px;
+  border-bottom: 2px solid black;
+  margin: 20px;
+  color: yellow;
+  text-shadow: 2px 2px black;
+  width: 150vh;
+  word-spacing: 1vh;
+}
+
+
+.ST_input2:focus {
+  outline: none;
+}
+
+#timer {
+  color: red;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10vh;
+  margin: 0vh;
+  font-weight: bolder;
+  text-shadow: 0.5vh 0.5vh black;
+  width: 20vh;
+  height: 20vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
 /*SPEEDTYPE LOGG INN OG REGISTRER BRUKER ---------------------------------------------------------*/
 #ikkeloggetinn {

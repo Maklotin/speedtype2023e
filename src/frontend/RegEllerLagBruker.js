@@ -5,6 +5,15 @@ import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
 
 import { MainContext } from "../Main";
 
+const getBrukere = async () => {
+    const usersCollectionRef = collection(db, "brukere");
+    const data = await getDocs(usersCollectionRef);
+    const brukere = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    return brukere;
+  };
 
 const RegEllerLagBruker = () => {
 
@@ -20,8 +29,6 @@ const RegEllerLagBruker = () => {
     const [regBrukere, setRegBrukere] = useState("")
 
     //generelt for siden
-    const [highscore, setHighscore] = useState(0)
-    const [poeng, setPoeng] = useState(0);
     const [error, setError] = useState("")
     const [errorLog, setErrorLog] = useState("")
     const [errorFarge, setErrorFarge] = useState("")
@@ -37,7 +44,8 @@ const RegEllerLagBruker = () => {
             await addDoc(usersCollectionRef, {
                 brukernavn: nyBrukernavn,
                 passord: nyPassord,
-                highscore: highscore
+                highscore: 0,
+                accuracy: "0%"
             });
             setError("Bruker registrert");
             setErrorFarge("green");
@@ -76,11 +84,6 @@ const RegEllerLagBruker = () => {
     };
 
 
-    if (poeng < highscore) {
-        setHighscore(poeng)
-    } else {
-
-    }
 
     useEffect(() => {
         /*https://www.youtube.com/watch?v=jCY6DH8F4oc&t=853s*/
@@ -94,7 +97,7 @@ const RegEllerLagBruker = () => {
     }, []);
 
     //logg inn funksjoner -----------------------------------------------------------------
-    const { brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean } = useContext(MainContext);
+    const { brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean, brukeren, setBrukeren } = useContext(MainContext);
 
 
     const handleBrukernavnInput = (e) => {
@@ -114,12 +117,12 @@ const RegEllerLagBruker = () => {
     }
 
     useEffect(() => {
-        const getBrukere = async () => {
-            const brukereMottatt = await hentBrukere();
-            setRegBrukere(brukereMottatt)
-        }
-        getBrukere();
-    }, [])
+        const fetchBrukere = async () => {
+          const brukereMottatt = await getBrukere();
+          setRegBrukere(brukereMottatt);
+        };
+        fetchBrukere();
+      }, []);
 
     const handleStateOppdater = () => {
         setBrukerLoggetInn(prevState => !prevState);
@@ -127,29 +130,30 @@ const RegEllerLagBruker = () => {
     }
 
 
-    const handleLogin = () => {
-        const bruker = regBrukere.find(
-            (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
-        );
+ const handleLogin = () => {
+    const bruker = regBrukere.find(
+      (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
+    );
 
-        if (brukernavnIn === "admin132" && passordIn === "ad132min") {
-            setAdminKnappBoolean((prevState) => !prevState);
-            console.log("ADMIN BRUKER LOGGET INN ");
-            setError("ADMIN bruker logget inn!");
-            setErrorFarge("blue")
-        } else {
-            if (bruker) {
-                setAdminKnappBoolean(false);
-                console.log("BRUKER LOGGET INN ");
-                setError("");
-                handleStateOppdater();
-            } else {
-                console.log("bruker ikke logget inn");
-                setErrorLog("Brukernavn eller passord er feil");
-                setErrorFarge("red");
-            }
-        }
-    };
+    if (brukernavnIn === "admin132" && passordIn === "ad132min") {
+      setAdminKnappBoolean((prevState) => !prevState);
+      console.log("ADMIN BRUKER LOGGET INN ");
+      setError("ADMIN bruker logget inn!");
+      setErrorFarge("blue");
+    } else {
+      if (bruker) {
+        setAdminKnappBoolean(false);
+        console.log("BRUKER LOGGET INN ");
+        setError("");
+        setBrukeren(bruker.id); // Replace this line
+        handleStateOppdater();
+      } else {
+        console.log("bruker ikke logget inn");
+        setErrorLog("Brukernavn eller passord er feil");
+        setErrorFarge("red");
+      }
+    }
+  };
 
 
 
