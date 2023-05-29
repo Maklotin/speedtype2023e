@@ -28,7 +28,10 @@ const SpeedTypeSpill = () => {
 
     const [nedtelling, setNedtelling] = useState(sekunder)
     const [currentInput, setCurrentInput] = useState([])
+    //CurrentWordIndex er for å matche hva brukeren har skrevet inn matcher med ordet som de skal skrive, mens CurrentCharIndex og CurrentChar er for å vise visuelt hva brukeren skrev feil om de skrev noe feil
     const [currentWordIndex, setCurrentWordIndex] = useState(0)
+    const [currentCharIndex, setCurrentCharIndex] = useState(-1)
+    const [currentChar, setCurrentChar] = useState("")
     const [spillStatus, setSpillStatus] = useState("ikkestartet")
 
     const [korrekt, setKorret] = useState(0)
@@ -73,11 +76,15 @@ const SpeedTypeSpill = () => {
     }
 
 
-    function handleKeyDown({ keyCode }) {
+    function handleKeyDown({ keyCode, key }) {
         if (keyCode === 32) {
             checkMatch()
             setCurrentInput("")
             setCurrentWordIndex(currentWordIndex + 1)
+            setCurrentCharIndex(-1)
+        } else {
+            setCurrentCharIndex(currentCharIndex + 1)
+            setCurrentChar(key)
         }
     }
 
@@ -114,6 +121,18 @@ const SpeedTypeSpill = () => {
 
 
     const [bruker, setBruker] = useState([]);
+    //53:23
+    function getCharClass(wordIdx, charIdx, char) {
+        if(wordIdx === currentWordIndex && charIdx === currentCharIndex && currentChar && spillStatus !== 'ferdig') {
+            if(char === currentChar) {
+                return 'bakgrunn-korrekt'
+            } else {
+                return 'bakgrunn-ukorrekt'
+            }
+        } else {
+            return ''
+        }
+    }
 
     return (
         <>
@@ -145,7 +164,7 @@ const SpeedTypeSpill = () => {
                                 <>
                                     <span className='tekst_ord' key={i}>
                                         {word.split("").map((char, idx) => (
-                                            <span key={idx}>{char}</span>
+                                            <span className={getCharClass(i, idx, char)} key={idx}>{char}</span>
                                         ))}
                                     </span>
                                     <span> </span>

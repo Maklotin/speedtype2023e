@@ -315,6 +315,14 @@ h1 {
   align-items: center;
 }
 
+.bakgrunn-korrekt {
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.bakgrunn-ukorrekt {
+  background-color:  rgba(255, 0, 0, 0.3);
+}
+
 /*SPEEDTYPE LOGG INN OG REGISTRER BRUKER ---------------------------------------------------------*/
 #ikkeloggetinn {
   display: flex;
