@@ -51,6 +51,8 @@ const SpeedTypeSpill = () => {
             setCurrentInput("")
             setKorrekt(0)
             setUkorrekt(0)
+            setHighscore(korrekt * 2)
+            UpdateUserInfo()
         }
         if (spillStatus !== "startet") {
 
@@ -89,23 +91,31 @@ const SpeedTypeSpill = () => {
 
         // Set the "capital" field of the city 'DC'
         await updateDoc(user, {
-            highscore: korrekt * 2,
+            highscore: highscore,
             accuracy: accuracy
         });
     }
 
 
-
+/*
+    KeyCode 32 = Mellomrom
+    KeyCode 189 = Bindestrek
+    KeyCode 8 = Backspace
+    KeyCode 16 = shift
+*/
     function handleKeyDown({ keyCode, key }) {
-        if (keyCode === 32) {
+        /*Hvis mellomrom eller bindestrek er trykket, så matcher den ordet skrevet med ordet i JSON
+        filen for å sjekke om de skrev riktig. */
+        if (keyCode === 32 || keyCode === 189) {
             checkMatch()
             setCurrentInput("")
             setCurrentWordIndex(currentWordIndex + 1)
             setCurrentCharIndex(-1)
-        } else if (keyCode  === 8) {
-            setCurrentChar(-1)
-            setCurrentWordIndex(currentWordIndex - 1)
-        }else {
+            //Om de trykker på backspace så vil ikke spillet registrere det som en bokstav de skrev inn
+        } else if (keyCode === 8) {
+            setCurrentCharIndex(currentCharIndex-1)
+            //Denne gjør slik at ingenting skjer om man trykker shift, og bestemmer hva som skjer når man trykker på alle andre bokstaver
+        } else if (keyCode !== 16) {
             setCurrentCharIndex(currentCharIndex + 1)
             setCurrentChar(key)
         }
