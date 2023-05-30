@@ -1,11 +1,11 @@
 import logo from '../bilder/logo1-1.png';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { db } from '../backend/firebase-config';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, where, query } from 'firebase/firestore';
 import './App.css';
 import tekstUtdragData from './planb.json';
 
-import Main, { MainContext } from '../Main';
+import  { MainContext } from '../Main';
 
 
 
@@ -34,7 +34,7 @@ const SpeedTypeSpill = () => {
     const [currentChar, setCurrentChar] = useState("")
     const [spillStatus, setSpillStatus] = useState("ikkestartet")
 
-    const [korrekt, setKorret] = useState(0)
+    const [korrekt, setKorrekt] = useState(0)
     const [ukorrekt, setUkorrekt] = useState(0)
     const [highscore, setHighscore] = useState(0);
     const textInput = useRef(null)
@@ -48,8 +48,8 @@ const SpeedTypeSpill = () => {
         setTekstTall(tall)
         setArrayTall(tall - 1)
         if (spillStatus === "ferdig") {
-            setCurrentInput(0)
-            setKorret(0)
+            setCurrentInput("")
+            setKorrekt(0)
             setUkorrekt(0)
         }
         if (spillStatus !== "startet") {
@@ -75,6 +75,26 @@ const SpeedTypeSpill = () => {
 
     }
 
+    
+    const UpdateUserInfo = async()=>{
+        const q = query(collection(db, "brukere"), where("brukernavn", "==", brukeren));
+
+        const querySnapshot = await getDocs(q);
+        let docID = '';
+        querySnapshot.forEach((doc) => {
+        // if email is you primary key then only document will be fetched so it is safe to continue, this line will get the documentID of user so that we can update it
+          docID = doc.id;
+        });
+        const user = doc(db, "users", docID);
+
+        // Set the "capital" field of the city 'DC'
+        await updateDoc(user, {
+            highscore: korrekt * 2,
+            accuracy: accuracy
+        });
+    }
+
+
 
     function handleKeyDown({ keyCode, key }) {
         if (keyCode === 32) {
@@ -82,7 +102,10 @@ const SpeedTypeSpill = () => {
             setCurrentInput("")
             setCurrentWordIndex(currentWordIndex + 1)
             setCurrentCharIndex(-1)
-        } else {
+        } else if (keyCode  === 8) {
+            setCurrentChar(-1)
+            setCurrentWordIndex(currentWordIndex - 1)
+        }else {
             setCurrentCharIndex(currentCharIndex + 1)
             setCurrentChar(key)
         }
@@ -94,7 +117,7 @@ const SpeedTypeSpill = () => {
         const wordToCompare = valgtTekst[currentWordIndex]
         const doesItMatch = wordToCompare === currentInput.trim()
         if (doesItMatch) {
-            setKorret(korrekt + 1)
+            setKorrekt(korrekt + 1)
         } else {
             setUkorrekt(ukorrekt + 1)
         }
@@ -190,7 +213,7 @@ const SpeedTypeSpill = () => {
                     <div id="resultat">
                         <div id="wpm">
                             <p>WPM - Words Per Minute:</p>
-                            <h3>{korrekt}</h3>
+                            <h3>{korrekt * 2}</h3>
                         </div>
                         <div id="accuracy">
                             <p>Nøyaktighet</p>

@@ -9,11 +9,11 @@ const getBrukere = async () => {
     const usersCollectionRef = collection(db, "brukere");
     const data = await getDocs(usersCollectionRef);
     const brukere = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
+        ...doc.data(),
+        id: doc.id,
     }));
     return brukere;
-  };
+};
 
 const RegEllerLagBruker = () => {
 
@@ -40,7 +40,7 @@ const RegEllerLagBruker = () => {
         const bruker = regBrukere.find(
             (bruker) => bruker.brukernavn === brukernavnIn
         );
-        if (nyBrukernavn !== "" && nyPassord !== "" && bruker === false) {
+        if (nyBrukernavn !== "" && nyPassord !== "" && !bruker) {
             await addDoc(usersCollectionRef, {
                 brukernavn: nyBrukernavn,
                 passord: nyPassord,
@@ -52,7 +52,7 @@ const RegEllerLagBruker = () => {
             setNyBrukernavn("");
             setPassordFelt1("");
             setPassordFelt2("");
-        } else if (nyBrukernavn !== "" && nyPassord !== "" && bruker === true){
+        } else if (nyBrukernavn !== "" && nyPassord !== "" && bruker) {
             setError("Brukernavn er tatt av noen andre");
             setErrorFarge("red");
         } else {
@@ -84,17 +84,8 @@ const RegEllerLagBruker = () => {
     };
 
 
+    /*https://www.youtube.com/watch?v=jCY6DH8F4oc&t=853s*/
 
-    useEffect(() => {
-        /*https://www.youtube.com/watch?v=jCY6DH8F4oc&t=853s*/
-
-        const getBrukere = async () => {
-            const data = await getDocs(usersCollectionRef);
-            setBruker(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        }
-
-        getBrukere();
-    }, []);
 
     //logg inn funksjoner -----------------------------------------------------------------
     const { brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean, brukeren, setBrukeren } = useContext(MainContext);
@@ -108,21 +99,16 @@ const RegEllerLagBruker = () => {
         setPassordIn(e.target.value);
     };
 
-    const hentBrukere = async () => {
-        const usersCollectionRef = collection(db, "brukere");
-        const q = query(usersCollectionRef);
-        const querySnapshot = await getDocs(q);
-        const brukere = querySnapshot.docs.map((doc) => doc.data());
-        return brukere;
-    }
+ 
 
     useEffect(() => {
         const fetchBrukere = async () => {
-          const brukereMottatt = await getBrukere();
-          setRegBrukere(brukereMottatt);
+            const brukereMottatt = await getBrukere();
+            setRegBrukere(brukereMottatt);
         };
+
         fetchBrukere();
-      }, []);
+    }, []);
 
     const handleStateOppdater = () => {
         setBrukerLoggetInn(prevState => !prevState);
@@ -130,30 +116,30 @@ const RegEllerLagBruker = () => {
     }
 
 
- const handleLogin = () => {
-    const bruker = regBrukere.find(
-      (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
-    );
+    const handleLogin = () => {
+        const bruker = regBrukere.find(
+            (bruker) => bruker.brukernavn === brukernavnIn && bruker.passord === passordIn
+        );
 
-    if (brukernavnIn === "admin132" && passordIn === "ad132min") {
-      setAdminKnappBoolean((prevState) => !prevState);
-      console.log("ADMIN BRUKER LOGGET INN ");
-      setError("ADMIN bruker logget inn!");
-      setErrorFarge("blue");
-    } else {
-      if (bruker) {
-        setAdminKnappBoolean(false);
-        console.log("BRUKER LOGGET INN ");
-        setError("");
-        setBrukeren(bruker.id); // Replace this line
-        handleStateOppdater();
-      } else {
-        console.log("bruker ikke logget inn");
-        setErrorLog("Brukernavn eller passord er feil");
-        setErrorFarge("red");
-      }
-    }
-  };
+        if (brukernavnIn === "admin132" && passordIn === "ad132min") {
+            setAdminKnappBoolean((prevState) => !prevState);
+            console.log("ADMIN BRUKER LOGGET INN ");
+            setError("ADMIN bruker logget inn!");
+            setErrorFarge("blue");
+        } else {
+            if (bruker) {
+                setAdminKnappBoolean(false);
+                console.log("BRUKER LOGGET INN ");
+                setError("");
+                setBrukeren(bruker.brukernavn); 
+                handleStateOppdater();
+            } else {
+                console.log("bruker ikke logget inn");
+                setErrorLog("Brukernavn eller passord er feil");
+                setErrorFarge("red");
+            }
+        }
+    };
 
 
 

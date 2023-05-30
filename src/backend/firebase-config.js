@@ -9,6 +9,7 @@ import { getFirestore } from '@firebase/firestore'
 // Your web app's Firebase configuration
 
 //bruker .env file for ekstra sikkerhet
+
 /*
 const firebaseConfig = {
   apiKey: process.env.REACT_KEY_APIKEY,
@@ -19,7 +20,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APPID
 };*/
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyDtYsXg1bc23HNpGNrKAH_GXsrLktjl-M8",
   authDomain: "speedtype-268c7.firebaseapp.com",
@@ -28,8 +28,6 @@ const firebaseConfig = {
   messagingSenderId: "137204822275",
   appId: "1:137204822275:web:79851dd6a3f0b5f6a53936"
 };
-
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
