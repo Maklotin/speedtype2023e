@@ -20,7 +20,7 @@ const SpeedTypeSpill = () => {
 
     var valgtTekst = tekstUtdragData[arrayTall]['Tekst ' + tekstTall]
     if (valgtTekst === "Tekst 0") {
-        var valgtTekst = tekstUtdragData[arrayTall]['Tekst ' + tekstTall]
+        valgtTekst = tekstUtdragData[arrayTall]['Tekst ' + tekstTall]
     }
 
 
@@ -39,46 +39,52 @@ const SpeedTypeSpill = () => {
     const textInput = useRef(null)
 
 
-    const oppdaterBruker = async () => {
-        try {
-            const docRef = doc(db, 'brukere', brukeren);
-            const docSnap = await getDoc(docRef);
+    useEffect(() => {
+        const oppdaterBrukerAsync = async () => {
+            try {
+                const docRef = doc(db, 'brukere', brukeren);
+                const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists()) {
+                if (docSnap.exists()) {
+                    const highscore = docSnap.data().highscore;
+                    console.log('Retrieved value:', highscore);
 
-                const highscore = docSnap.data().highscore;
-                console.log('Retrieved value:', highscore);
-
-                if (highscore < scoreST) {
-                    const brukerRef = doc(db, 'brukere', brukeren);
-                    // Update the high score in Firestore
-                    updateDoc(brukerRef, {
-                        highscore: scoreST,
-                        accuracy: accuracyST // Replace with your new high score value
-                    });
-
-
-                } else {
-                    console.log('Document not found');
+                    if (highscore < scoreST) {
+                        const brukerRef = doc(db, 'brukere', brukeren);
+                        await updateDoc(brukerRef, {
+                            highscore: scoreST,
+                            accuracy: accuracyST
+                        });
+                    } else {
+                        console.log('Document not found');
+                    }
                 }
+            } catch (error) {
+                console.log('Error retrieving value:', error);
             }
-        } catch (error) {
-            console.log('Error retrieving value:', error);
-        }
-    };
+        };
 
+        if ((nedtelling === 0 || spillStatus === 'ferdig') && brukeren) {
+            oppdaterBrukerAsync();
+        }
+    }, [nedtelling, spillStatus, brukeren]);
 
 
     //https://www.youtube.com/watch?v=t4W7PN4js-8
-    function startSpill() {
+    async function startSpill() {
         var tall = Math.floor(Math.random() * 17)
         setTekstTall(tall)
         setArrayTall(tall - 1)
         if (spillStatus === "ferdig") {
-            setCurrentInput("")
+            setCurrentInput([])
             setKorrekt(0)
             setUkorrekt(0)
-            oppdaterBruker()
+            // DISSE VAR IKKE MED I TUTORIALEN JEG ORGINALT FULGTE
+            // Disse resetter spillet og starter det FULLSTENDIG på nytt. Uten disse vil programme bruke checkMatch() på et tilfeldig ord i en ny tilfeldig tekst
+            setCurrentWordIndex(0)
+            setCurrentCharIndex(-1)
+            setCurrentChar("")
+            
 
         }
         if (spillStatus !== "startet") {
@@ -141,6 +147,8 @@ const SpeedTypeSpill = () => {
         }
     }
 
+    
+
     //denne gjør slik at nettleseren automatisk fokuserer på tekstinput elementet når man trykker på start knappen
     useEffect(() => {
         if (spillStatus === "startet") {
@@ -178,7 +186,6 @@ const SpeedTypeSpill = () => {
     return (
         <>
             <div id="f_spillet">
-                <button className='knapper' onClick={oppdaterBruker}>Oppdater bruker</button>
                 <h2 id="timer">{nedtelling}</h2>
                 <hr id="kort_strek"></hr>
                 {spillStatus === "ikkestartet" && (
@@ -262,7 +269,7 @@ const SpeedTypeSpill = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {bruker.map((bruker) => (
+                        {bruker.sort((a, b) => b.highscore - a.highscore).map((bruker) => (
                             <tr key={bruker.id}>
                                 <td>
                                     <p className="p_venstre">{bruker.brukernavn}</p>

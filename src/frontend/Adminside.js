@@ -63,6 +63,10 @@ const Adminside = () => {
                                 {" "}
                                 <p className="admintekst">brukernavn: {bruker.brukernavn}</p>
                                 <p className="admintekst">passord: {bruker.passord}</p>
+                                <p className="admintekst">ID: {bruker.id}</p>
+                                <p className="admintekst">highscore: {bruker.highscore}</p>
+                                <p className="admintekst">nøyaktighet: {bruker.accuracy}</p>
+
                                 <div id="modifiser_brukere">
                                     <button onClick={() => { oppdaterPassord(bruker.id, bruker.passord) }} className="knapper"><p>Bytt passord</p></button>
                                     <button onClick={() => { slettBruker(bruker.id) }} className="slett_bruker"><p>Slett bruker</p></button>

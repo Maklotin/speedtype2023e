@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './App.css';
 import { db } from '../backend/firebase-config'
 import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
@@ -71,6 +71,7 @@ const RegEllerLagBruker = () => {
         }
     }, [passordFelt1, passordFelt2]);
 
+
     const handleNyBrukernavnChange = (e) => {
         setNyBrukernavn(e.target.value);
     }
@@ -110,6 +111,7 @@ const RegEllerLagBruker = () => {
 
         fetchBrukere();
     }, []);
+
 
     const handleStateOppdater = () => {
         setBrukerLoggetInn(prevState => !prevState);

@@ -5,6 +5,7 @@ import SpeedTypeSpill from "./frontend/SpeedTypeSpill";
 import AdminSide from "./frontend/Adminside";
 import FaqSide from "./frontend/FAQ";
 import LoverOgReglerSide from "./frontend/LoverOgRegler"
+import IntroVideo from "./frontend/IntroVideo";
 
 export const MainContext = createContext();
 
