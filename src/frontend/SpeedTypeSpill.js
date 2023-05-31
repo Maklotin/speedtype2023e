@@ -1,12 +1,11 @@
 import logo from '../bilder/logo1-1.png';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { db } from '../backend/firebase-config';
-import { collection, getDocs, updateDoc, doc, where, query } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
 import './App.css';
 import tekstUtdragData from './planb.json';
 
-import  { MainContext } from '../Main';
-
+import { MainContext } from '../Main';
 
 
 const sekunder = 30
@@ -15,16 +14,16 @@ const sekunder = 30
 const SpeedTypeSpill = () => {
     const [tekstTall, setTekstTall] = useState(1)
     const [arrayTall, setArrayTall] = useState(0)
-    
+
     const { brukeren, setBrukeren } = useContext(MainContext)
     console.log(brukeren)
-    
+
     var valgtTekst = tekstUtdragData[arrayTall]['Tekst ' + tekstTall]
     if (valgtTekst === "Tekst 0") {
         var valgtTekst = tekstUtdragData[arrayTall]['Tekst ' + tekstTall]
     }
-    
-    
+
+
 
     const [nedtelling, setNedtelling] = useState(sekunder)
     const [currentInput, setCurrentInput] = useState([])
@@ -34,15 +33,43 @@ const SpeedTypeSpill = () => {
     const [currentChar, setCurrentChar] = useState("")
     const [spillStatus, setSpillStatus] = useState("ikkestartet")
 
+
     const [korrekt, setKorrekt] = useState(0)
     const [ukorrekt, setUkorrekt] = useState(0)
-    const [highscore, setHighscore] = useState(0);
     const textInput = useRef(null)
 
 
+    const oppdaterBruker = async () => {
+        try {
+            const docRef = doc(db, 'brukere', brukeren);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+
+                const highscore = docSnap.data().highscore;
+                console.log('Retrieved value:', highscore);
+
+                if (highscore < scoreST) {
+                    const brukerRef = doc(db, 'brukere', brukeren);
+                    // Update the high score in Firestore
+                    updateDoc(brukerRef, {
+                        highscore: scoreST,
+                        accuracy: accuracyST // Replace with your new high score value
+                    });
+
+
+                } else {
+                    console.log('Document not found');
+                }
+            }
+        } catch (error) {
+            console.log('Error retrieving value:', error);
+        }
+    };
+
+
+
     //https://www.youtube.com/watch?v=t4W7PN4js-8
-
-
     function startSpill() {
         var tall = Math.floor(Math.random() * 17)
         setTekstTall(tall)
@@ -51,8 +78,8 @@ const SpeedTypeSpill = () => {
             setCurrentInput("")
             setKorrekt(0)
             setUkorrekt(0)
-            setHighscore(korrekt * 2)
-            UpdateUserInfo()
+            oppdaterBruker()
+
         }
         if (spillStatus !== "startet") {
 
@@ -77,43 +104,23 @@ const SpeedTypeSpill = () => {
 
     }
 
-    
-    const UpdateUserInfo = async()=>{
-        const q = query(collection(db, "brukere"), where("brukernavn", "==", brukeren));
-
-        const querySnapshot = await getDocs(q);
-        let docID = '';
-        querySnapshot.forEach((doc) => {
-        // if email is you primary key then only document will be fetched so it is safe to continue, this line will get the documentID of user so that we can update it
-          docID = doc.id;
-        });
-        const user = doc(db, "users", docID);
-
-        // Set the "capital" field of the city 'DC'
-        await updateDoc(user, {
-            highscore: highscore,
-            accuracy: accuracy
-        });
-    }
-
-
-/*
-    KeyCode 32 = Mellomrom
-    KeyCode 189 = Bindestrek
-    KeyCode 8 = Backspace
-    KeyCode 16 = shift
-*/
+    /*
+        KeyCode 32 = Mellomrom
+        KeyCode 8 = Backspace
+        KeyCode 16 = shift
+    */
     function handleKeyDown({ keyCode, key }) {
         /*Hvis mellomrom eller bindestrek er trykket, så matcher den ordet skrevet med ordet i JSON
         filen for å sjekke om de skrev riktig. */
-        if (keyCode === 32 || keyCode === 189) {
+        if (keyCode === 32) {
             checkMatch()
             setCurrentInput("")
             setCurrentWordIndex(currentWordIndex + 1)
             setCurrentCharIndex(-1)
+
             //Om de trykker på backspace så vil ikke spillet registrere det som en bokstav de skrev inn
         } else if (keyCode === 8) {
-            setCurrentCharIndex(currentCharIndex-1)
+            setCurrentCharIndex(currentCharIndex - 1)
             //Denne gjør slik at ingenting skjer om man trykker shift, og bestemmer hva som skjer når man trykker på alle andre bokstaver
         } else if (keyCode !== 16) {
             setCurrentCharIndex(currentCharIndex + 1)
@@ -121,7 +128,8 @@ const SpeedTypeSpill = () => {
         }
     }
 
-    var accuracy = Math.round((korrekt / (korrekt + ukorrekt)) * 100) + "%"
+    var accuracyST = Math.round((korrekt / (korrekt + ukorrekt)) * 100) + "%"
+    var scoreST = korrekt * 2
 
     function checkMatch() {
         const wordToCompare = valgtTekst[currentWordIndex]
@@ -156,8 +164,8 @@ const SpeedTypeSpill = () => {
     const [bruker, setBruker] = useState([]);
     //53:23
     function getCharClass(wordIdx, charIdx, char) {
-        if(wordIdx === currentWordIndex && charIdx === currentCharIndex && currentChar && spillStatus !== 'ferdig') {
-            if(char === currentChar) {
+        if (wordIdx === currentWordIndex && charIdx === currentCharIndex && currentChar && spillStatus !== 'ferdig') {
+            if (char === currentChar) {
                 return 'bakgrunn-korrekt'
             } else {
                 return 'bakgrunn-ukorrekt'
@@ -170,6 +178,7 @@ const SpeedTypeSpill = () => {
     return (
         <>
             <div id="f_spillet">
+                <button className='knapper' onClick={oppdaterBruker}>Oppdater bruker</button>
                 <h2 id="timer">{nedtelling}</h2>
                 <hr id="kort_strek"></hr>
                 {spillStatus === "ikkestartet" && (
@@ -177,6 +186,7 @@ const SpeedTypeSpill = () => {
                         <button className="knapper" onClick={startSpill}>
                             <h3>Start</h3>
                         </button>
+
                     </div>
                 ) || "ferdig" && (
                     <div id="start_spill">
@@ -227,7 +237,7 @@ const SpeedTypeSpill = () => {
                         </div>
                         <div id="accuracy">
                             <p>Nøyaktighet</p>
-                            <h3>{accuracy}</h3>
+                            <h3>{accuracyST}</h3>
                         </div>
                     </div>
                 )

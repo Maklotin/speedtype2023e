@@ -5,6 +5,7 @@ import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
 
 import { MainContext } from "../Main";
 
+
 const getBrukere = async () => {
     const usersCollectionRef = collection(db, "brukere");
     const data = await getDocs(usersCollectionRef);
@@ -131,7 +132,7 @@ const RegEllerLagBruker = () => {
                 setAdminKnappBoolean(false);
                 console.log("BRUKER LOGGET INN ");
                 setError("");
-                setBrukeren(bruker.brukernavn); 
+                setBrukeren(bruker.id); 
                 handleStateOppdater();
             } else {
                 console.log("bruker ikke logget inn");
