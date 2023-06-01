@@ -17,6 +17,10 @@ const Main = () => {
     const [loggTekst, setLoggTekst] = useState("none")
     const [adminKnapp, setAdminKnapp] = useState("none")
     const [adminKnappBoolean, setAdminKnappBoolean] = useState(false)
+    const [STaktivKnapp, setSTaktivKnapp] = useState("knapper")
+    const [IntrAktivKnapp, setIntrAktivKnapp] = useState("knapper")
+    const [LoverOgReglerKnapp, setLoverOgReglerKnapp] = useState("knapper")
+    const [FAQknapp, setFAQknapp] = useState("knapper")
 
     useEffect(() => {
         if (loggTekstBoolean) {
@@ -41,20 +45,39 @@ const Main = () => {
     };
 
     const SpeedType = () => {
+        setSTaktivKnapp("aktivknapp")
+        setIntrAktivKnapp("knapper")
+        setLoverOgReglerKnapp("knapper")
+        setFAQknapp("knapper")
         return brukerLoggetInn ? <SpeedTypeSpill /> : <RegEllerLagBruker />;
+
     };
 
     const IntrVideo = () => {
-        return <></>;
+        setSTaktivKnapp("knapper")
+        setIntrAktivKnapp("aktivknapp")
+        setLoverOgReglerKnapp("knapper")
+        setFAQknapp("knapper")
+        return <IntroVideo/>;
     };
 
     const FAQ = () => {
+        setSTaktivKnapp("knapper")
+        setIntrAktivKnapp("knapper")
+        setLoverOgReglerKnapp("knapper")
+        setFAQknapp("aktivknapp")
         return <FaqSide />;
     };
 
     const LoverOgRegler = () => {
+        setSTaktivKnapp("knapper")
+        setIntrAktivKnapp("knapper")
+        setLoverOgReglerKnapp("aktivknapp")
+        setFAQknapp("knapper")
         return <LoverOgReglerSide />;
     };
+
+
 
     const Admin = () => {
         return <AdminSide />
@@ -81,16 +104,16 @@ const Main = () => {
                 value={{ brukerLoggetInn, setBrukerLoggetInn, loggTekstBoolean, setLoggTekstBoolean, adminKnappBoolean, setAdminKnappBoolean, brukeren, setBrukeren }}
             >
                 <div id="top">
-                    <button onClick={() => setAktivSideMain("SpeedType")} className="knapper">
+                    <button onClick={() => setAktivSideMain("SpeedType")} className={STaktivKnapp}>
                         <p>Spill</p>
                     </button>
-                    <button onClick={() => setAktivSideMain("IntrVideo")} className="knapper">
+                    <button onClick={() => setAktivSideMain("IntrVideo")} className={IntrAktivKnapp}>
                         <p>Instruksjonsvideo</p>
                     </button>
-                    <button onClick={() => setAktivSideMain("FAQ")} className="knapper">
+                    <button onClick={() => setAktivSideMain("FAQ")} className={FAQknapp}>
                         <p>FAQ</p>
                     </button>
-                    <button onClick={() => setAktivSideMain("LoverOgRegler")} className="knapper">
+                    <button onClick={() => setAktivSideMain("LoverOgRegler")} className={LoverOgReglerKnapp}>
                         <p>Lover og regler</p>
                     </button>
                     <button onClick={() => setAktivSideMain("AdminSide")} style={{ display: adminKnapp, backgroundColor: "blue" }} className="knapper">
