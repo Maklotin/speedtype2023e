@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import './App.css';
 import { db } from '../backend/firebase-config'
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore'
+import { collection, getDocs, addDoc } from 'firebase/firestore'
 
 import { MainContext } from "../Main";
 
