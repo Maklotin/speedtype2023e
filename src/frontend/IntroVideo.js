@@ -35,7 +35,9 @@ const IntroVideo = () => {
                     </ul>
                 </ul>
                 <h1>Nå kan du spille SpeedType!</h1>
+                <p>copyright Mikkel Huth Andersen - 2023</p>
             </div>
+            
 
         </>
     )
