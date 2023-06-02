@@ -28,6 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "build:staging": "react-scripts build",
     "build:production": "react-scripts build",
     "test": "react-scripts test",
