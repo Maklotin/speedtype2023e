@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Speedtype 2023
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+DU FINNER ALT AV FILER SOM PROSJEKTRAPPORT, TEKNISK DOKUMENTASJON OSV... I "DOKUMENTER" MAPPEN. 
 
-## Available Scripts
+# Hvordan starte programmet:
 
-In the project directory, you can run:
+## Slik funker react (oversimplifisert):
 
-### `npm start`
+- React er laget for "Single Page Applications" som er at i stedet for å ha en HTML fil per side, så har denne nettsiden 1 HTML totalt (som du finner i "public" mappen, 404.html telles ikke).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Du bruker JavaScript med NodeJS bibliotek og kommandoer (NodeJs library er i "Node_Modules" og JavaScript filene ligger i "src" mappa) for å rendre alle sidene på HTML dokumentet. Det blir som at hele siden er bygget på ".innerHTML" kommandoen hvis det gir mening. HTML koden du er i JS filene er såkalt "JSX" og er HTML med noen tilpasninger til JavaScript.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Hvorfor React?
 
-### `npm test`
+- Siden alt er på ett HTML Dokument så vil alt være mye mer responsivt. Altså i stedet for at hver gang du går til en ny side på nettsiden så vil den måtte laste inn en helt ny HTML fil, så vil i stedet for hele nettsiden lastes inn med en gang du laster inn hjemmesiden, så å navigere seg fra side til side skjer umiddelbart. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Ved bruken av JSX slipper du å måtte hoppe frem og tilbake mellom HTML og JavaScript med document.getElementByID og lignende. I stedet kan du lage en variabel i JavaScript også inn i ett HTML element skrive f. Eks < element id={VariabelNavn}>. Dette er nyttig for f. Eks å visualisere JSON filer på siden. Da kan du skrive: <br> <br>
+<code>
+import fil from "./fil.json" <br>
+< table > <br>
+    {fil.map((fil) => ( <br>
+                            < tr key={fil.verdi}> <br>
+                                < td> <br>
+                                    < p>{fil.navn}</ p> <br>
+                                </ td> <br>
+                                < td> <br>
+                                    < p>{fil.alder}</ p> <br>
+                                </ td> <br>
+                                < td> <br>
+                                    < p >{fil.kontor}</ p> <br>
+                                </ td> <br>
+                            </ tr> <br>
+                        ))} <br>
+</ table>
+</code> <br> <br>
 
-### `npm run build`
+Denne koden vil lage en hel rad for hvert objekt i JSON filen. 
+# Hvordan faktisk starte programmet
+## VIKTIG: Ha NodeJS installert på PCen!
+Åpne SpeedType2023 i Visual Studio Code
+Åpne terminalen og skriv "npm start".
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Om det ikke funker kan det være at du må installere react-scripts. Det gjør du bare ved å skrive:
+"npm install react-scripts" i terminalen også kan du skrive "npm start" så vil det åpne seg.

@@ -17,3 +17,5 @@ Jeg fikk koblet MongoDB serveren til Visual Studio Code og MongoDB Compass så n
 Har fjernet koblingne mellom årsoppgavemappen lokalt på PCen og Guthub repository.
 
 Hver gang jeg startet prosjektet på nettleseren så ville den koble seg på "Localhost:3000/Maklotin/aarsoppgave202". Dette skjedde fordi det var kode i Package.json som koblet seg på "aarsopggave2023" Repository. Jeg reinstallerte ReactJs og overførte filer og dermed kræsjet kobling til Github og den lokale mappen. Jeg fjerna linjen som koblet til github repository og så funket alt som det skulle.
+
+

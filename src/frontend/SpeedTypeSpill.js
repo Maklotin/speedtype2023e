@@ -269,6 +269,7 @@ const SpeedTypeSpill = () => {
                         </tr>
                     </thead>
                     <tbody>
+                        {/*Sorterer alle brukere med høyest highscore på topp, også lavest på bunnen */}
                         {bruker.sort((a, b) => b.highscore - a.highscore).map((bruker) => (
                             <tr key={bruker.id}>
                                 <td>
