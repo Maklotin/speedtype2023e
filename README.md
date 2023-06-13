@@ -42,3 +42,7 @@ Denne koden vil lage en hel rad for hvert objekt i JSON filen.
 
 Om det ikke funker kan det være at du må installere react-scripts. Det gjør du bare ved å skrive:
 "npm install react-scripts" i terminalen også kan du skrive "npm start" så vil det åpne seg.
+
+# Deploy React App
+
+Gå på Powershell -> Åpne som administrator -> skriv "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
