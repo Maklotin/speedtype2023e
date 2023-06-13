@@ -20,6 +20,10 @@ const FaqSide = () => {
                 <h1>Frequently Asked Question</h1>
                 <ul id="spoersmaal">
                     <li>
+                        <h3>Hvorfor er tekstene og knappene så store?</h3>
+                        <p>Dette skjer om skaleringen på skjermen din er over 100%. For å fikse dette må du gå på innstilliger -> system -> skjerm -> Bla ned til "Skala og oppsett" -> "Endre størrelse på tekst, apper eller andre elementer -> trykk på drop down menyen og velg 100%</p>
+                    </li>
+                    <li>
                         <h3>Hvordan kan jeg slette brukeren min?</h3>
                         <p>Du kan sende mail til: mikkel.huth.a@gmail.com og skriv brukernavn og brukerIDen din. Ved å skrive bruker IDen din vil det være lettere for oss å finne brukeren din i vår database.</p>
                         <p>Din brukerID er: <code id="bruker_id">{brukerID}</code></p>
