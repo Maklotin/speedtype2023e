@@ -3,7 +3,8 @@ import './App.css'
 
 const LoverOgRegler = () => {
     return (
-        <>
+        <>  
+            <div id="innhold_lor">
             <h1>Lover og regler</h1>
             <table id="lover_og_regler">
                 <tr>
@@ -72,7 +73,16 @@ const LoverOgRegler = () => {
                     <td>Samme som opp^</td>
                     <td>Samme som opp^</td>
                 </tr>
+                <tr>
+                    <th><h3>Opphavsrett</h3></th>
+                    <td>Opphavsrett og åndsverksloven er lover som gjelder alt åndsverk. Åndsverk kan være ting som musikk, sang, sangtekst, fotograf, maleri osv... </td>
+                    <td>§43 Fri bruk av verk ved undervisningsvirksomhet</td>
+                    <td>Ved å offentliggjøre SpeedType til allmennheten, tjene penger på SpeedType eller hevde at tekstutdrag er mitt eget verk </td>
+                    <td>Konsekvenser ved å krenke noens opphavsrett kan føre til saksøking og krav på erstatningspenger. Hvor mye dette koster kommer veldig ann på hvor stor økonomisk skade krenkelsen av opphavsretten kan ha utført.</td>
+                    <td>Ved å ikke offentliggjøre SpeedType til allmennheten eller hevde at alle utdrag er mitt åndsverk. Nettsiden min er beskyttet av §43 siden dette er et skoleprosjekt og ikke laget for allmennheten og dermed kan bruke åndsverk fritt så lenge det er brukt i god skikk</td>
+                </tr>
             </table>
+            </div>
         </>
     )
 

@@ -454,11 +454,24 @@ code {
 
 #lover_og_regler td {
   font-weight: bolder;
+  border: 1px solid yellow;
+  color: white;
+  padding: 1vh 1vh;
 }
 
 #lover_og_regler {
   width: 80%;
+  border: 1px solid yellow;
+  box-shadow: 0.5vh 0.5vh black;
 }
+
+#innhold_lor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 
 /* INTRO VIDEO SIDE -----------------------------------------------------------------*/
 #introvideoside {
